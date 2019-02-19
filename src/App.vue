@@ -1,5 +1,13 @@
 <template>
   <div id="app">
-   哈哈
+   <Films></Films>
   </div>
-</template> 
+</template>
+<script>
+import Films from './views/Films'
+export default {
+  components: {
+    Films
+  }
+}
+</script>
