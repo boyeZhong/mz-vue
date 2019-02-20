@@ -86,9 +86,18 @@ let router = new VueRouter({
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
   nprogress.start();
-  // to and from are both route objects. must call `next`.
-  if (to.path === '/mzcard' || to.path === '/balance' || to.path === '/system') {
-    next('/login');
+  // 通过sessionStorage存储的本地昵称来判断是否登录
+  // (to.path === '/mzcard' || to.path === '/balance' || to.path === '/system') && !sessionStorage.getItem('nickname')
+  let list = ['/mzcard', '/balance', '/system'];
+  let nickname = !sessionStorage.getItem('nickname');
+  if (list.indexOf(to.path) > -1 && nickname) {
+    next({
+      path: '/login',
+      query: {
+        // 登录成功以后将之前点击的完整地址传过登录页面
+        redirect: to.fullPath
+      }
+    });
   } else {
     next();
   }

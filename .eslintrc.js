@@ -14,7 +14,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 对不让使用分号规则进行覆盖
-    'semi': "off"
+    'semi': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'
