@@ -4,3 +4,6 @@
         即将上映
     </div>
 </template>
+<style lang="less">
+
+</style>

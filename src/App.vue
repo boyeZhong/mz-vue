@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-   <Films></Films>
+   <router-view></router-view>
+    <mz-footer></mz-footer>
   </div>
 </template>
 <script>
-import Films from './views/Films'
+import MzFooter from './components/MzFooter/Index'
 export default {
   components: {
-    Films
+    MzFooter
   }
 }
 </script>
