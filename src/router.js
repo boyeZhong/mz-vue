@@ -5,11 +5,13 @@ import Cinema from './views/Cinema.vue';
 import Center from './views/Center.vue';
 import Home from './views/Home.vue';
 import City from './views/City.vue';
+import Detail from './views/Detail.vue';
 
 Vue.use(VueRouter);
 
 // 配置路由
 let router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -37,8 +39,14 @@ let router = new VueRouter({
       ]
     },
     {
+      name: '呵呵',
       path: '/city',
       component: City
+    },
+    {
+      path: '/detail/:id',
+      props: true,
+      component: Detail
     },
     {
       path: '*',
