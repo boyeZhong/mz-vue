@@ -4,6 +4,7 @@ import App from './App.vue';
 // Vue.config.productionTip = false
 import 'nprogress/nprogress.css';
 import './assets/less/reset.less';
+import './assets/less/common.less';
 import router from './router';
 new Vue({
   router,

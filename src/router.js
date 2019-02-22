@@ -1,37 +1,46 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Film from './views/Films.vue';
-import Cinema from './views/Cinema.vue';
-import Center from './views/Center.vue';
-import Home from './views/Home.vue';
-import City from './views/City.vue';
-import Detail from './views/Detail.vue';
-import Login from './views/Login.vue';
+// import Film from './views/Films.vue';
+// import Cinema from './views/Cinema.vue';
+// import Center from './views/Center.vue';
+// import Home from './views/Home.vue';
+// import City from './views/City.vue';
+// import Detail from './views/Detail.vue';
+// import Login from './views/Login.vue';
+// import MzCard from './views/MzCard.vue';
+// import Balance from './views/Balance.vue';
+// import System from './views/System.vue';
 import nprogress from 'nprogress';
 Vue.use(VueRouter);
 
 // 配置路由
-let router = new VueRouter({
+const router = new VueRouter({
   // mode: 'history',一般用hash，history需要后台配合，在生产模式的时候
+  scrollBehavior (to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  },
   routes: [
     {
       path: '/',
-      component: Home,
+      component: () => import('./views/home/Index.vue'),
       children: [
         // Ps:不是一级路由的话，path路径前面不要加/
         // 二级或者二级以上的路由，他们的url地址，会从一级路由开始加
         // localhost:8080/#/home/films
         {
           path: 'films',
-          component: Film
+          component: () => import('./views/home/film/Index.vue')
         },
         {
           path: 'cinemas',
-          component: Cinema
+          component: () => import('./views/home/cinema/Index.vue')
         },
         {
           path: 'center',
-          component: Center
+          component: () => import('./views/home/center/Index.vue')
         },
         {
           path: '',
@@ -42,12 +51,18 @@ let router = new VueRouter({
     {
       name: '呵呵',
       path: '/city',
-      component: City
+      component: () => import('./views/city/Index'),
+      children: [
+        {
+          path: 'mz-header',
+          component: () => import('./components/MzHeader/Index.vue')
+        }
+      ]
     },
     {
       path: '/detail/:id',
       props: true,
-      component: Detail
+      component: () => import('./views/detail/Index.vue')
     },
     {
       path: '*',
@@ -55,31 +70,19 @@ let router = new VueRouter({
     },
     {
       path: '/mzcard',
-      component: {
-        render (h) {
-          return h('div', '卖座卡')
-        }
-      }
+      component: () => import('./views/mycard/Index.vue')
     },
     {
       path: '/balance',
-      component: {
-        render (h) {
-          return h('div', '余额')
-        }
-      }
+      component: () => import('./views/balance/Index.vue')
     },
     {
       path: '/system',
-      component: {
-        render (h) {
-          return h('div', '设置')
-        }
-      }
+      component: () => import('./views/system/Index.vue')
     },
     {
       path: '/login',
-      component: Login
+      component: () => import('./views/login/Index.vue')
     }
   ]
 })

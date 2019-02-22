@@ -11,8 +11,8 @@
     </div>
 </template>
 <script>
-import MzBanner from '../components/MzBanner/Index';
-import MzTabs from '../components/MzTabs/Index';
+import MzBanner from '@/components/MzBanner/Index';
+import MzTabs from '@/components/MzTabs/Index';
 export default {
   components: {
     MzBanner,
