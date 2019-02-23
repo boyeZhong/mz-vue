@@ -1,6 +1,6 @@
 <template>
   <div class="mz-city">
-    <mz-header></mz-header>
+    <mz-header :title='"当前城市- "+ curCityName'></mz-header>
     <div class="citySearch">
           <input type="text" placeholder="请输入城市名或拼音">
           <i class="iconfont icon-magnifier"></i>
@@ -31,7 +31,9 @@
         <li class="lv-indexsection" v-for="(item, index) in filterCityData" v-bind:key="index" :id='item.py'>
           <p class="lv-indexsection__index">{{item.py}}</p>
           <ul>
-            <li v-for="city in item.list" v-bind:key="city.cityId">{{city.name}}</li>
+            <li v-for="city in item.list"
+                v-bind:key="city.cityId"
+                v-on:click='chgCity(city)'>{{city.name}}</li>
           </ul>
         </li>
       </ul>
@@ -56,50 +58,66 @@ export default {
   },
   data () {
     return {
-      // 城市列表数据集合
-      cityData: []
+      // // 城市列表数据集合
+      // cityData: []
     };
   },
   computed: {
+    cityData () {
+      return this.store.stete.cityData;
+    },
+    filterCityData () {
+      // 借助computed返回仓库的数据
+      return this.$store.getters.filterCityData;
+    },
+    filterLetters () {
+      // 借助computed返回仓库的数据
+      return this.$store.getters.filterLetters;
+    },
+    curCityName () {
+      // 借助computed返回仓库的数据
+      return this.$store.state.curCityName;
+    }
     /**
      *
      * 在计算属性对获取的数据列表数据进行处理得到我们需要的数据格式
      *
      */
-    filterCityData () {
-      let hash = {};
-      let i = 0;
-      let res = [];
+    // filterCityData () {
+    //   let hash = {};
+    //   let i = 0;
+    //   let res = [];
 
-      this.cityData.forEach(item => {
-        // 1.得到当前城市的首字母,每个item都是一个对象，每个对象里面有城市名字的拼音，截取拼音的首字母，变成大写
-        let firstLetter = item.pinyin.substr(0, 1).toUpperCase();
-        // 通过首字母判断，这个首字母之前是否存储过，如果有，就直接将这个对象的城市名字存储到res数组的这个首字母对象，如果没有，就要新建一个首字母对象存入res数组。
-        if (hash[firstLetter]) {
-          // 存在
-          let index = hash[firstLetter] - 1; // 比如进来的是A hash[A] = 1，nameA模块在res的下标是0
-          res[index].list.push(item);
-        } else { // 不存在
-          hash[firstLetter] = ++i;// hash 是一个对象hash[A] = ++i,相当于给hash添加属性A：1，当第二次又字母进来就是B：2..
-          let obj = {};// 这个对象是用来保存城市模块，比如所有首字母用A开头的城市
-          obj.py = firstLetter;// 这组城市的首字母
-          obj.list = [];// 这组城市的所有城市对象
-          obj.list.push(item);// 添加城市对象
-          res.push(obj);
-        }
-      })
-      let temp = res.sort((a, b) => { // sort 数组排序，charCodeAt()转换为阿斯克码
-        return a.py.charCodeAt() - b.py.charCodeAt();
-      })
-      return temp;
-    },
-
-    filterLetters () {
-      return this.filterCityData.map(item => { // 这样可以返回一个数组的value值，也可以返回index
-        return item.py;
-      })
-    }
-
+    //   this.cityData.forEach(item => {
+    //     // 1.得到当前城市的首字母,每个item都是一个对象，每个对象里面有城市名字的拼音，截取拼音的首字母，变成大写
+    //     let firstLetter = item.pinyin.substr(0, 1).toUpperCase();
+    //     // 通过首字母判断，这个首字母之前是否存储过，如果有，就直接将这个对象的城市名字存储到res数组的这个首字母对象，如果没有，就要新建一个首字母对象存入res数组。
+    //     if (hash[firstLetter]) {
+    //       // 存在
+    //       let index = hash[firstLetter] - 1; // 比如进来的是A hash[A] = 1，nameA模块在res的下标是0
+    //       res[index].list.push(item);
+    //     } else { // 不存在
+    //       hash[firstLetter] = ++i;// hash 是一个对象hash[A] = ++i,相当于给hash添加属性A：1，当第二次又字母进来就是B：2..
+    //       let obj = {};// 这个对象是用来保存城市模块，比如所有首字母用A开头的城市
+    //       obj.py = firstLetter;// 这组城市的首字母
+    //       obj.list = [];// 这组城市的所有城市对象
+    //       obj.list.push(item);// 添加城市对象
+    //       res.push(obj);
+    //     }
+    //   })
+    //   let temp = res.sort((a, b) => { // sort 数组排序，charCodeAt()转换为阿斯克码
+    //     return a.py.charCodeAt() - b.py.charCodeAt();
+    //   })
+    //   return temp;
+    // },
+    // /**
+    //  * 右侧栏字母导航数据
+    //  */
+    // filterLetters () {
+    //   return this.filterCityData.map(item => { // 这样可以返回一个数组的value值，也可以返回index
+    //     return item.py;
+    //   })
+    // },
   },
   methods: {
     /**
@@ -112,7 +130,7 @@ export default {
         let res = response.data;
         if (res.status === 0) {
           // 获取成功
-          this.cityData = res.data.cities;
+          this.$store.commit('chgCityData', res.data.cities);
         } else {
           // 获取失败
           alert(res.msg);
@@ -129,6 +147,14 @@ export default {
       let el = document.getElementById(py);
       // 2.操作滚动条让他和el距离相等
       document.getElementById('indelistId').scrollTop = el.offsetTop;
+    },
+    /**
+     *
+     * @param {obj} city 城市对象
+     *
+     */
+    chgCity (city) {
+      this.$store.commit('chgCityName', city.name)
     }
   },
   created () {

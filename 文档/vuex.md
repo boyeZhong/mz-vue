@@ -3,6 +3,16 @@
 1. 安装  yarn add vuex
 2. 创建一个 vuex 的仓库文件   src/store/index.js
 3. 编写 仓库文件，并暴露仓库
+  - 引入 vue vuex
+  -Vue.use(Vuex)
+  -创建长裤对象
+  - let store = new Vuex.Store({
+    // 状态 - 项目中需要的数据，复用数据
+    state：{
+      //当前城市定位
+      curCityName
+    }
+  })
 4. 在  mian.js 中。将 仓库做一个注入
 5. 愉快的写代码。
 
@@ -14,7 +24,7 @@
 
 # 如何从仓库中取出数据在组件中使用
 
-1. computed
+1. computed 借助计算属性返回
   computed: {
     curCityName () {
       return this.$store.state.curCityName;
@@ -37,7 +47,7 @@ mutations: {
   }
 }
 
-组件中：（需要提交 chgCityName 这个 mutation）
+组件中：（需要提交调用 chgCityName 这个 mutation）
 
 1. this.$store.commit('chgCityName')
 

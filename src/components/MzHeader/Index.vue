@@ -1,7 +1,7 @@
 <template>
     <header class="mz-header">
         <div class="title">
-            <div class="left"><i class="iconfont icon-untitled94"></i></div>
+            <routerLink tag="div" to="@/views/home/film/Index.vue" class="left"><i class="iconfont icon-untitled94"></i></routerLink>
             <div class="right">{{title}}</div>
         </div>
     </header>
@@ -12,7 +12,7 @@ export default {
     // 标题
     title: {
       type: String,
-      default: '当前城市 -'
+      default: '北京'
     }
   }
 }

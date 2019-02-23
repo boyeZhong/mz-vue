@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <div class="mz-films">
+        <div class="city-fixed" v-on:click='goCity'>
+          <span>{{curCityName}}</span>
+          <i class="iconfont icon-xiala" style="font-size: 10px;"></i>
+        </div>
         <mz-banner></mz-banner>
         <mz-tabs></mz-tabs>
-        <button v-on:click='goCity'>城市页面</button>
         <ul>
           <router-link tag="li" to="/detail/100">蓝色生死恋</router-link>
           <router-link tag="li" to="/detail/200">50米之恋</router-link>
@@ -17,6 +20,12 @@ export default {
   components: {
     MzBanner,
     MzTabs
+  },
+  computed: {
+    curCityName () {
+      // 借助computed返回仓库的数据
+      return this.$store.state.curCityName;
+    }
   },
   methods: {
     goCity () {
@@ -40,3 +49,21 @@ export default {
   }
 }
 </script>
+<style lang="less">
+  .mz-films{
+      .city-fixed {
+        position: absolute;
+        top: 18px;
+        left: 7px;
+        color: #fff;
+        z-index: 10;
+        font-size: 13px;
+        background: rgba(0,0,0,.2);
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px;
+        text-align: center;
+        padding: 0 5px;
+      }
+  }
+</style>
