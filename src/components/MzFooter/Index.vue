@@ -20,6 +20,7 @@
         justify-content: space-around;
         align-items: center;
         position: fixed;
+        z-index: 999999;
         bottom: 0;
         left: 0;
         background-color: #fff;

@@ -10,7 +10,9 @@ let store = new Vuex.Store({
     // 当前城市定位
     curCityName: '深圳',
     // 城市列表数据
-    cityData: []
+    cityData: [],
+    // 电影类型
+    filmType: 'nowPlaying'
   },
   getters: {
     /**
@@ -55,6 +57,14 @@ let store = new Vuex.Store({
     }
   },
   mutations: {
+    /**
+     *
+     * @param {state} state就是仓库中的state
+     * @param {payload}
+     */
+    changeFilmType (state, payload) {
+      state.filmType = payload;
+    },
     //   key: value
     /**
      * 修改curCityName

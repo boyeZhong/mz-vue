@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container mz-banner">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="item in bannerList" :key="item._id">
+      <div class="swiper-slide" v-for="item in bannerList" :key="item.bannerId">
         <img :src="item.imgUrl" alt>
         Slide 1
       </div>
@@ -40,17 +40,18 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:3000/banner/search', {
-      // params才是get的参数
-      params: {
-        pageSize: 10
+    axios.get('/api/gateway?type=2&cityId=440300&k=1217371', {
+      // 配置请求头
+      headers: {
+        'X-Client-Info': '{"a":"3000","ch":"1002","v":"1.0.0","e":"1550631651150474179215837"}',
+        'X-Host': 'mall.cfg.common-banner'
       }
     })
       . then(res => {
         // !!!res不是 后台给你返回的数据，真正后台给你返回的数据在res.data上
         let data = res.data;
         this.bannerList = data.data;
-        if (data.code === 0) {
+        if (data.status === 0) {
           // 1.数据更新之后，对轮播图做个更新
           this.$nextTick(() => {
             this.initSwiper();

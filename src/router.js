@@ -1,15 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Film from './views/Films.vue';
-// import Cinema from './views/Cinema.vue';
-// import Center from './views/Center.vue';
-// import Home from './views/Home.vue';
-// import City from './views/City.vue';
-// import Detail from './views/Detail.vue';
-// import Login from './views/Login.vue';
-// import MzCard from './views/MzCard.vue';
-// import Balance from './views/Balance.vue';
-// import System from './views/System.vue';
 import nprogress from 'nprogress';
 Vue.use(VueRouter);
 
@@ -32,7 +22,21 @@ const router = new VueRouter({
         // localhost:8080/#/home/films
         {
           path: 'films',
-          component: () => import('./views/home/film/Index.vue')
+          component: () => import('./views/home/film/Index.vue'),
+          children: [
+            {
+              path: 'nowPlaying',
+              component: () => import('./views/home/film/NowPlaying.vue')
+            },
+            {
+              path: 'comingSoon',
+              component: () => import('./views/home/film/ComingSoon.vue')
+            },
+            {
+              path: '',
+              redirect: '/films/nowPlaying'
+            }
+          ]
         },
         {
           path: 'cinemas',

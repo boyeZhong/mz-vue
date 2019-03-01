@@ -29,13 +29,11 @@ export default {
           alert('登录成功');
           // 将昵称保存在本地
           sessionStorage.setItem('nickname', data.data.nickname);
-          console.log(data.data);
           // 保存成功以后让页面跳转到进来登录之前的页面,this.$route.query.redirect这是由上个页面的路由带过来的数据
           this.$router.push(this.$route.query.redirect);
         } else {
           alert(data.msg);
         }
-        console.log(data);
       })
     }
   }
