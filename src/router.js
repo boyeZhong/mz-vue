@@ -96,8 +96,8 @@ router.beforeEach((to, from, next) => {
   // 通过sessionStorage存储的本地昵称来判断是否登录
   // (to.path === '/mzcard' || to.path === '/balance' || to.path === '/system') && !sessionStorage.getItem('nickname')
   let list = ['/mzcard', '/balance', '/system'];
-  let nickname = !sessionStorage.getItem('nickname');
-  if (list.indexOf(to.path) > -1 && nickname) {
+  let nickname = sessionStorage.getItem('nickname');
+  if (list.indexOf(to.path) > -1 && !nickname) {
     next({
       path: '/login',
       query: {
