@@ -87,6 +87,10 @@ const router = new VueRouter({
     {
       path: '/login',
       component: () => import('./views/login/Index.vue')
+    },
+    {
+      path: '/register',
+      component: () => import('./views/register/Index.vue')
     }
   ]
 })

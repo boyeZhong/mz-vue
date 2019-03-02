@@ -10,10 +10,15 @@
       <div class="form-group">
         <input placeholder="密码" class="input-control" type="password" v-model="password" />
       </div>
-      <div class="submit login-btn" @click="handleLogin">
-        <span>登录</span>
+      <div class="form-group">
+        <input placeholder="确认密码" class="input-control" type="password" v-model="repassword" />
       </div>
-      <router-link tag="div" class="noRegister" to="/register">未注册？</router-link>
+      <div class="form-group">
+        <input placeholder="昵称" class="input-control" type="text" v-model="nickName" />
+      </div>
+      <div class="submit login-btn" @click="handleLogin">
+        <span>注册</span>
+      </div>
     </div>
   </div>
 </template>
@@ -23,29 +28,36 @@ export default {
   data () {
     return {
       userName: '',
-      password: ''
+      password: '',
+      repassword: '',
+      nickName: '',
+      isAdmin: 0
     }
   },
   methods: {
     /**
-         * 登录方法
+         * 注册方法
          */
     handleLogin () {
-      axios.post('http://129.28.119.175:3000/user/login', {
-        userName: this.userName,
-        password: this.password
-      }).then(res => {
-        let data = res.data;
-        if (data.code === 0) {
-          alert('登录成功');
-          // 将昵称保存在本地
-          sessionStorage.setItem('nickname', data.data.nickname);
-          // 保存成功以后让页面跳转到进来登录之前的页面,this.$route.query.redirect这是由上个页面的路由带过来的数据
-          this.$router.push(this.$route.query.redirect);
-        } else {
-          alert(data.msg);
-        }
-      })
+      if (this.password === this.repassword) {
+        axios.post('http://129.28.119.175:3000/user/register', {
+          userName: this.userName,
+          password: this.password,
+          nickName: this.nickName,
+          isAdmin: this.isAdmin
+        }).then(res => {
+          let data = res.data;
+          if (data.code === 0) {
+            alert('注册成功');
+            // 保存成功以后让页面跳转到进来登录之前的页面,this.$route.query.redirect这是由上个页面的路由带过来的数据
+            this.$router.push(this.$route.query.redirect);
+          } else {
+            alert(data.msg);
+          }
+        })
+      } else {
+        alert('两次密码输入不一致');
+      }
     }
   }
 }
@@ -62,6 +74,7 @@ body{
     text-align: center;
     height: 60px;
     line-height: 60px;
+
     img {
       height: 60px;
     }
@@ -97,13 +110,6 @@ body{
       height: 44px;
       color: #fff;
       border: none;
-    }
-    .noRegister {
-      text-align: center;
-      height: 44px;
-      line-height: 44px;
-      color: black;
-      width: 100%;
     }
   }
 }

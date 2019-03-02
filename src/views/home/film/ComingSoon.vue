@@ -30,6 +30,7 @@
     </ul>
     <div class="comingXiala" v-if="comingPages <= comingPageNum">别拉啦，我是有底线的</div>
     <div class="comingXiala" v-else @click="comingLoadMore">加载下一页</div>
+
   </div>
 </template>
 <script>
@@ -46,7 +47,7 @@ export default {
   computed: {
     comingPages () {
       // 向上取整得到最大页数
-      return Math.ceil(this.total / this.pageSize);
+      return Math.ceil(this.comingTotal / this.comingPageSize);
     }
   },
   methods: {
@@ -54,8 +55,8 @@ export default {
       axios.get('/api/gateway', {
         params: {
           cityId: 440300,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.comingPageNum,
+          pageSize: this.comingPageSize,
           type: 2,
           k: 4230516
         },
@@ -65,7 +66,7 @@ export default {
         }
       }).then(res => {
         let data = res.data;
-        this.comingTotal = data.data.comgingTotal;
+        this.comingTotal = data.data.total;
         if (data.status === 0) {
           this.comingFilmData = this.comingFilmData.concat(data.data.films);
         } else {
