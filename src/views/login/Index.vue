@@ -45,7 +45,7 @@ export default {
           let loginPath = {
             path: '/center',
             query: { id: '个人中心' }
-            };
+          };
           this.$router.push(this.$route.query.redirect === undefined ? loginPath : this.$route.query.redirect);
         } else {
           alert(data.msg);
