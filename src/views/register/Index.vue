@@ -16,7 +16,7 @@
       <div class="form-group">
         <input placeholder="昵称" class="input-control" type="text" v-model="nickName" />
       </div>
-      <div class="submit login-btn" @click="handleLogin">
+      <div class="submit login-btn" @click="handleRegister">
         <span>注册</span>
       </div>
     </div>
@@ -38,7 +38,7 @@ export default {
     /**
          * 注册方法
          */
-    handleLogin () {
+    handleRegister () {
       if (this.password === this.repassword) {
         axios.post('http://129.28.119.175:3000/user/register', {
           userName: this.userName,
@@ -49,8 +49,12 @@ export default {
           let data = res.data;
           if (data.code === 0) {
             alert('注册成功');
+            sessionStorage.setItem('nickname', this.nickName);
             // 保存成功以后让页面跳转到进来登录之前的页面,this.$route.query.redirect这是由上个页面的路由带过来的数据
-            this.$router.push(this.$route.query.redirect);
+            this.$router.push({
+              path: '/films/nowPlaying',
+              query: { id: '注册成功' }
+            });
           } else {
             alert(data.msg);
           }

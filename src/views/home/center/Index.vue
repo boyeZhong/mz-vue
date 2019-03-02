@@ -2,7 +2,7 @@
   <div class="home-center">
     <div class="avatar">
       <img src="@/assets/avatar.png" class="avator-icon">
-      <div class="nick-name">立即登录</div>
+      <div class="nick-name" @click="login">{{nickName === null ? '立即登录' : nickName}}</div>
     </div>
 
     <ul class="my-order-tab">
@@ -30,7 +30,37 @@
 </template>
 <script>
 export default {
+  data () {
+    return {
+      nickName: null
+    }
+  },
   components: {
+  },
+  methods: {
+    getNickName () {
+      if (sessionStorage.getItem('nickname')) {
+        this.nickName = sessionStorage.getItem('nickname');
+      } else {
+        this.nickName = null;
+      }
+    },
+    login () {
+      if (sessionStorage.getItem('nickname')) {
+        this.$router.push({
+          path: '/system',
+          query: { id: '去设置中心' }
+        });
+      } else {
+        this.$router.push({
+          path: '/login',
+          query: { id: '去登录' }
+        });
+      }
+    }
+  },
+  created () {
+    this.getNickName();
   }
 }
 </script>

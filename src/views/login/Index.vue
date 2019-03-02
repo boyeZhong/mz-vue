@@ -39,9 +39,14 @@ export default {
         if (data.code === 0) {
           alert('登录成功');
           // 将昵称保存在本地
-          sessionStorage.setItem('nickname', data.data.nickname);
+          console.log(data.data);
+          sessionStorage.setItem('nickname', data.data.nickName);
           // 保存成功以后让页面跳转到进来登录之前的页面,this.$route.query.redirect这是由上个页面的路由带过来的数据
-          this.$router.push(this.$route.query.redirect);
+          let loginPath = {
+            path: '/center',
+            query: { id: '个人中心' }
+            };
+          this.$router.push(this.$route.query.redirect === undefined ? loginPath : this.$route.query.redirect);
         } else {
           alert(data.msg);
         }

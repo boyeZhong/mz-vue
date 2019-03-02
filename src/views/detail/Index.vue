@@ -1,10 +1,6 @@
 <template>
   <div>
-    详情页面
-
-    哈哈哈哈哈哈
-
-    <h1>当前影片的 id是 {{ $route.params.id }}</h1>
+    <h1>当前影片:{{ $route.params.id.name }}</h1>
   </div>
 </template>
 

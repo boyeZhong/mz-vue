@@ -1,7 +1,7 @@
 <template>
   <div class="comingSoon">
     <ul infinite-scroll-disabled="loading" infinite-scroll-distance="100" class="comingSoonList">
-      <li  v-for='film in comingFilmData' :key = 'film.filmId' class="comingSoon-item">
+      <li @click="goDetail(film)" v-for='film in comingFilmData' :key = 'film.filmId' class="comingSoon-item">
         <a class="comingSoon-wrap">
           <div class="img-box">
             <img
@@ -77,6 +77,12 @@ export default {
     comingLoadMore () {
       this.comingPageNum++;
       this.comingGetFilmDate();
+    },
+    goDetail (name) {
+      this.$router.push({
+        name: 'detail',
+        params: { id: name }
+      });
     }
   },
   created () {

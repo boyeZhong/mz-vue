@@ -21,6 +21,7 @@ const router = new VueRouter({
         // 二级或者二级以上的路由，他们的url地址，会从一级路由开始加
         // localhost:8080/#/home/films
         {
+          name: 'film',
           path: 'films',
           component: () => import('./views/home/film/Index.vue'),
           children: [
@@ -64,6 +65,7 @@ const router = new VueRouter({
       ]
     },
     {
+      name: 'detail',
       path: '/detail/:id',
       props: true,
       component: () => import('./views/detail/Index.vue')
@@ -85,6 +87,7 @@ const router = new VueRouter({
       component: () => import('./views/system/Index.vue')
     },
     {
+      name: 'login',
       path: '/login',
       component: () => import('./views/login/Index.vue')
     },

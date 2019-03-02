@@ -1,7 +1,7 @@
 <template>
   <div class="nowPlaying">
     <ul infinite-scroll-disabled="loading" infinite-scroll-distance="100" class="nowPlayingList">
-      <li v-for="film in filmData" :key = 'film.filmId' class="nowPlayingFilm-item">
+      <li @click="goDetail(film)" v-for="film in filmData" :key = 'film.filmId' class="nowPlayingFilm-item">
         <a class="nowPlayingFilm-wrap">
           <div class="img-box">
             <img
@@ -76,6 +76,12 @@ export default {
     loadMore () {
       this.pageNum++;
       this.GetFilmDate();
+    },
+    goDetail (name) {
+      this.$router.push({
+        name: 'detail',
+        params: { id: name }
+      });
     }
   },
   created () {
