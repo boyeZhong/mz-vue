@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container mz-banner">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="item in bannerList" :key="item.bannerId">
+      <div @click="goDetail(item)" class="swiper-slide" v-for="item in bannerList" :key="item.bannerId">
         <img :src="item.imgUrl" alt>
         Slide 1
       </div>
@@ -37,6 +37,12 @@ export default {
          }
       });
       /* eslint-enable */
+    },
+    goDetail (name) {
+      this.$router.push({
+        name: 'detail',
+        params: { id: name }
+      });
     }
   },
   created () {

@@ -69,7 +69,7 @@ export default {
         if (data.status === 0) {
           this.filmData = this.filmData.concat(data.data.films);// 使用concat拼接数组，但是他不会改变原数组，所以要赋值
         } else {
-          alert(this.filmData.msg)
+          alert(res.data.msg)
         }
       })
     },

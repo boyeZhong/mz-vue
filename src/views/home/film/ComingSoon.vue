@@ -70,7 +70,7 @@ export default {
         if (data.status === 0) {
           this.comingFilmData = this.comingFilmData.concat(data.data.films);
         } else {
-          alert(this.comingFilmData.msg)
+          alert(res.data.msg)
         }
       })
     },
