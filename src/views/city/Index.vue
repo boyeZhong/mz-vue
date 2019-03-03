@@ -97,7 +97,7 @@ export default {
      *
      */
     chgCity (city) {
-      this.chgCityName(city.name);
+      this.chgCityName(city);
     }
   },
   created () {

@@ -34,6 +34,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 export default {
   data () {
     return {
@@ -47,13 +48,17 @@ export default {
     pages () {
       // 向上取整得到最大页数
       return Math.ceil(this.total / this.pageSize);
-    }
+    },
+    ...mapState([
+      'curCityName',
+      'curCityId'
+    ])
   },
   methods: {
     GetFilmDate () {
       axios.get('/api/gateway', {
         params: {
-          cityId: 440300,
+          cityId: this.curCityId,
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           type: 1,

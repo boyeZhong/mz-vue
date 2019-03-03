@@ -9,6 +9,8 @@ let store = new Vuex.Store({
   state: {
     // 当前城市定位
     curCityName: '深圳',
+    // 当前城市Id
+    curCityId: 440300,
     // 城市列表数据
     cityData: [],
     // 电影类型
@@ -71,8 +73,9 @@ let store = new Vuex.Store({
      * @param {obj}satte就是当前仓库的state
      * @prame {String} name 城市名
      */
-    chgCityName (state, name) {
-      state.curCityName = name;
+    chgCityName (state, city) {
+      state.curCityName = city.name;
+      state.curCityId = city.cityId
     },
     /**
      *
@@ -96,7 +99,9 @@ let store = new Vuex.Store({
           // 获取成功
           // this.$store.commit('chgCityData', res.data.cities);
           // this.chgCityData(res.data.cities);
-          commit('chgCityData', res.data.cities);
+          let citiesData = [];
+          citiesData = citiesData.concat(res.data.cities);
+          commit('chgCityData', citiesData);
         } else {
           // 获取失败
           alert(res.msg);

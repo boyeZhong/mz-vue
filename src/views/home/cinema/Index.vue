@@ -29,8 +29,6 @@
                 <span class="cinema-lowPrice price-fmt">
                   <i>￥</i>
                   <span class="interge">{{cinema.lowPrice/100}}</span>
-                  <!-- <span class="spot">.</span>
-                  <span class="decimal">9</span> -->
                 </span>
                 <span class="upon">起</span>
               </div>
@@ -45,6 +43,7 @@
 
 <script>
 import MzHeader from '@/components/MzHeader/Index';
+import { mapState } from 'vuex';
 import axios from 'axios';
 export default {
   data () {
@@ -55,11 +54,16 @@ export default {
   components: {
     MzHeader
   },
+  computed: {
+    ...mapState([
+      'curCityId'
+    ])
+  },
   methods: {
     GetCinemaDate () {
       axios.get('/api/gateway', {
         params: {
-          cityId: 440300,
+          cityId: this.curCityId,
           k: 4461800
         },
         headers: {
